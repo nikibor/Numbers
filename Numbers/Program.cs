@@ -20,11 +20,14 @@ namespace Numbers
                 Nums n = new Nums(x);
                 Translate t = new Translate(x);
                 Console.WriteLine(n.ToEight(8));
-                Console.WriteLine("{0}в десятичной системе счисления", t.Russian()[0]);
-                if (t.Russian()[1].Length >0)
+                string result = t.Russian().Normalize();
+                result.Normalize();
+                if (result.Contains(" "))
                 {
-                    Console.Write("{0}в десятичной системе счисления", t.Russian()[1]);
+                    result.Remove(result.IndexOf(' '), 1);
+                    result.Trim(' ');
                 }
+                Console.WriteLine("{0}в десятичной системе счисления", result);                
             }
             catch (Exception ex)
             {

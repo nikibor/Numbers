@@ -18,68 +18,55 @@ namespace Numbers
         static string[] nums2 = { "десять", "одиннадцать", "двенадцать", "тренадцать", "четырнадцать", "пятнадцать", "шестнадцать", "семнадцать", "восемнадцать", "девятнадцать" };
         static string[] nums3 = { "", "", "двадцать", "тридцать", "сорок", "пятьдесят", "шестьдесят", "семьдесят", "восемдесят", "девяносто" };
         static string[] nums4 = { "", "сто", "двести", "триста", "четыреста", "пятьсот", "шестьсот", "семьсот", "восемьсот", "девятьсот" };
-        static string[] nums5 = { "", "тысяч(а/и)", "миллион", "миллиард", "триллион", "квадрилион", "квантиллион", "секстиллион", "септиллион", "октоллион", "нониллион", "дециллион", "андециллион", "дуодециллион", "тредециллион", "кваттордециллион", "квиндециллион", "сексдециллион", "септемдециллион", "октодециллион", "новемдециллион", "вигинтиллион", "анвигинтиллион", "дуовигинтиллион", "тревигинтиллион", "кватторвигинтиллион", "квинвгинтиллион", "сексвигинтиллион", "септимвигинтиллион", "октовигинтиллион", "новемвигинтиллион", "тригинтиллион", "антригинтиллион" };
+        static string[] nums5 = { "", "тысяч", "миллион", "миллиард", "триллион", "квадрилион", "квантиллион", "секстиллион", "септиллион", "октоллион", "нониллион", "дециллион", "андециллион", "дуодециллион", "тредециллион", "кваттордециллион", "квиндециллион", "сексдециллион", "септемдециллион", "октодециллион", "новемдециллион", "вигинтиллион", "анвигинтиллион", "дуовигинтиллион", "тревигинтиллион", "кватторвигинтиллион", "квинвгинтиллион", "сексвигинтиллион", "септимвигинтиллион", "октовигинтиллион", "новемвигинтиллион", "тригинтиллион", "антригинтиллион" };
         /// <summary>
         /// Перевод на русский язык введенного числа
         /// </summary>
         /// <returns></returns>
-        public List<string> Russian()
+        public string Russian()
         {
             List<string> lst = new List<string>();
             string res = "";
-            string res2 = "";            
+            //string res2 = "";            
             string num = x.ToString();
             int digit = 0;
             while( (num.Length)>=3 )
             {
-                int LastThree = Convert.ToInt32(num.Substring(num.Length-3));
-                if (digit < 30)
+            int LastThree = Convert.ToInt32(num.Substring(num.Length-3));                
+                if (LastThree % 10 == 0 && digit != 0)
                 {
-                    if (LastThree%10 == 0 && digit !=0)
-                    {
-                        res = String.Format("{0} {1}(ов) {2}", ThirdDigit(LastThree), nums5[digit], res);
-                    }
-                    else if (LastThree%10 == 1 && digit != 0)
-                    {
-                        res = String.Format("{0} {1}(а/ов) {2}", ThirdDigit(LastThree), nums5[digit], res);
-                    }
-                    else if(LastThree%10 == 2 || LastThree % 10 == 3|| LastThree % 10 == 4 || LastThree % 10 == 5 && digit != 0)
-                    {
-                        res = String.Format("{0} {1}(а/ов) {2}", ThirdDigit(LastThree), nums5[digit], res);
-                    }
-                    else res = String.Format("{0} {1} {2}", ThirdDigit(LastThree), nums5[digit], res);
+                    res = String.Format("{0} {1}ов {2}", ThirdDigit(LastThree), nums5[digit], res);
                 }
-                else
+                else if (LastThree % 10 == 1 && digit != 0 && LastThree % 100 != 11)
                 {
-                    if (LastThree % 10 == 0 && digit != 0)
-                    {
-                        res2 = String.Format("{0} {1}(ов) {2}", ThirdDigit(LastThree), nums5[digit], res2);
-                    }
-                    if (LastThree % 10 == 1 && digit != 0)
-                    {
-                        res2 = String.Format("{0} {1}(а) {2}", ThirdDigit(LastThree), nums5[digit], res2);
-                    }
-                    else if (LastThree % 10 == 2 || LastThree % 10 == 3 || LastThree % 10 == 4 && digit != 0)
-                    {
-                        res2 = String.Format("{0} {1}(и) {2}", ThirdDigit(LastThree), nums5[digit], res2);
-                    }
-                    else res2 = String.Format("{0} {1} {2}", ThirdDigit(LastThree), nums5[digit], res2);
+                    res = String.Format("{0} {1} {2}", ThirdDigit(LastThree), nums5[digit], res);
                 }
-                num = num.Remove(num.Length - 3);
-                digit++;
-                x = BigInteger.Divide(x, 1000);
-            }
-            if (digit < 20)
-            {
-                res = String.Format("{0}{1} {2}", ThirdDigit(Convert.ToInt32(x.ToString())), nums5[digit++], res);
-            }
-            else
-            {
-                res2 = String.Format("{0}{1} {2}", ThirdDigit(Convert.ToInt32(x.ToString())), nums5[digit++], res2);
-            }
-            lst.Add(res);
-            lst.Add(res2);
-            return lst;
+                else if ((LastThree % 10 == 2 || LastThree % 10 == 3 || LastThree % 10 == 4) && digit != 0)
+                {
+                    res = String.Format("{0} {1}а {2}", ThirdDigit(LastThree), nums5[digit], res);
+                }
+                else if (digit != 0)
+                {
+                    res = String.Format("{0} {1}ов {2}", ThirdDigit(LastThree), nums5[digit], res);
+                }
+                else if (LastThree % 10 == 1 && digit == 1)
+                {
+                    res = String.Format("{0} {1}а {2}", ThirdDigit(LastThree), nums5[digit], res);
+                }
+                else if ((LastThree % 10 == 2 || LastThree % 10 == 3 || LastThree % 10 == 4) && digit == 1)
+                {
+                    res = String.Format("{0} {1}и {2}", ThirdDigit(LastThree), nums5[digit], res);
+                }
+                else 
+                {
+                    res = String.Format("{0} {1} {2}", ThirdDigit(LastThree), nums5[digit], res);
+                }               
+            num = num.Remove(num.Length - 3);                
+            digit++;
+            x = BigInteger.Divide(x, 1000);
+            }                       
+            res = String.Format("{0}{1} {2}", ThirdDigit(Convert.ToInt32(x.ToString())), nums5[digit++], res);
+            return res;
         }
         /// <summary>
         /// Перевод последних трех чисел на русский
@@ -109,7 +96,7 @@ namespace Numbers
             {
                 res = String.Format("{0} {1} {2}", res, nums3[(y / 10) % 10], nums1[y % 10]);
             }
-            return res = String.Format("{0} {1} ", nums4[y / 100], res);
+            return res = String.Format("{0} {1}", nums4[y / 100], res);
         }
     }
     
