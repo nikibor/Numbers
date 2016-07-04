@@ -65,7 +65,7 @@ namespace Numbers
             digit++;
             x = BigInteger.Divide(x, 1000);
             }                       
-            res = String.Format("{0}{1} {2}", ThirdDigit(Convert.ToInt32(x.ToString())), nums5[digit++], res);
+            res = String.Format("{0} {1} {2}", ThirdDigit(Convert.ToInt32(x.ToString())), nums5[digit++], res);
             return res;
         }
         /// <summary>
@@ -80,7 +80,7 @@ namespace Numbers
             {
                 switch(y%100)
                 {
-                    case (10): res += nums2[0];break;
+                    case (10): res += nums2[0]; break;
                     case (11): res += nums2[1]; break;
                     case (12): res += nums2[2]; break;
                     case (13): res += nums2[3]; break;
@@ -99,5 +99,4 @@ namespace Numbers
             return res = String.Format("{0} {1}", nums4[y / 100], res);
         }
     }
-    
 }

@@ -19,15 +19,12 @@ namespace Numbers
             {
                 Nums n = new Nums(x);
                 Translate t = new Translate(x);
-                Console.WriteLine(n.ToEight(8));
                 string result = t.Russian().Normalize();
-                result.Normalize();
-                if (result.Contains(" "))
-                {
-                    result.Remove(result.IndexOf(' '), 1);
-                    result.Trim(' ');
-                }
-                Console.WriteLine("{0}в десятичной системе счисления", result);                
+                Console.WriteLine("{0}в десятичной системе счисления", Clean.Cleaninig(Clean.Cleen(result)));
+                Console.WriteLine(" ");
+                t.x = BigInteger.Parse(n.ToEight(8));
+                string Eight = t.Russian().Normalize();
+                Console.WriteLine("{0}в восьмиричной системе счисления", Clean.Cleaninig(Clean.Cleen(Eight.Normalize())));
             }
             catch (Exception ex)
             {
