@@ -10,28 +10,18 @@ namespace Numbers
     class Program
     {
         static void Main(string[] args)
-        {            
+        {
             try
             {
-                Console.WriteLine("Введите число:");
-                string num = Console.ReadLine();
-                Console.WriteLine("Длинна введенной строки = {0}", num.Length);
-                BigInteger x = BigInteger.Parse(num);
-                Nums n = new Nums(x);
-                string result = Translate.Russian(x).Normalize();
-                Console.WriteLine("{0}в десятичной системе счисления", result.Normalize());
-                if (args[0].Contains("-eight"))
-                {
-                    Console.WriteLine(" ");
-                    string Eight = Translate.Russian(BigInteger.Parse(n.ToEight(8))).Normalize();
-                    Console.WriteLine("{0}в восьмиричной системе счисления", Eight.Normalize());
-                }                                
+                BigInteger x = new BigInteger();
+                CommandLine.Check(args, ref x);
+                foreach (string a in args)
+                    if (a == CommandLine.eight) CommandLine.Eight(x);
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
-                //Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.Message);
             }
-            Console.ReadKey();
         }
     }
 }

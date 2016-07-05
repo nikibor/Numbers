@@ -41,11 +41,11 @@ namespace Numbers
         /// </summary>
         /// <param name="y"></param>
         /// <returns></returns>
-        public static string ThirdDigit(int y)
+        public static string ThirdDigit(int y, int digit)
         {
             string res = "";
-            if (y % 100 > 9 && y % 100 < 20) res += nums2[y % 100];
-            else res = String.Format("{0}{1} {2}", res, nums3[(y / 10) % 10], nums1[y % 10]);
+            if (y < 3 && digit == 1) res = (y == 1) ? "одна" : "две";
+            else res = (y % 100 > 9 && y % 100 < 20) ? res + nums2[y % 10] : String.Format("{0}{1} {2}", res, nums3[(y / 10) % 10], nums1[y % 10]);            
             return res = String.Format("{0} {1}", nums4[y / 100], res);
         }
         /// <summary>
@@ -61,7 +61,7 @@ namespace Numbers
             int LastNum = LastThree % 10;
             if (digit == 1) res = (LastNum > 1 || LastNum == 0) ? (LastNum < 5) ? String.Format("и") : String.Empty : String.Format("а");
             else if (digit != 0) res = (LastNum > 1 || LastNum == 0) ? (LastNum < 5) ? String.Format("а") : String.Format("ов") : String.Empty;
-            if (LastThree != 0) return String.Format("{0} {1}{2}", ThirdDigit(LastThree), word, res);
+            if (LastThree != 0) return String.Format("{0} {1}{2}", ThirdDigit(LastThree, digit), word, res);
             else return res;
         }
     }
