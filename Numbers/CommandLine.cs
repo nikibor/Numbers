@@ -17,11 +17,15 @@ namespace Numbers
         /// Работа с переводом в 8сс
         /// </summary>
         /// <param name="n">Первоначальное число</param>
-        public static void Eight(BigInteger n)
+        public static void Eight(BigInteger n, string[] args)
         {
-            Console.WriteLine(" ");
-            string Eight = Translate.Russian(BigInteger.Parse(Nums.ToEight(n))).Normalize();
-            Console.WriteLine("{0}в восьмиричной системе счисления", Eight.Normalize());
+            foreach (string a in args)
+                if (a == CommandLine.eight)
+                {
+                    Console.WriteLine(" ");
+                    string Eight = Translate.Russian(BigInteger.Parse(Nums.ToEight(n))).Normalize();
+                    Console.WriteLine("{0}в восьмиричной системе счисления", Eight.Normalize());
+                }
         }
         /// <summary>
         /// Проверка параметров и выдача результата
@@ -37,7 +41,6 @@ namespace Numbers
                     if(args[i]==num)
                     {
                         bigInt = Num(args[i + 1]);
-                        WorkWirh10(bigInt);
                         break;
                     }
                 }
@@ -47,6 +50,9 @@ namespace Numbers
                 Console.WriteLine("Введите число:");
                 bigInt = BigInteger.Parse(Console.ReadLine());
             }
+            string result = Translate.Russian(bigInt).Normalize();
+            Console.WriteLine("Длинна введенной строки = {0}", bigInt.ToString().Length);
+            Console.WriteLine("{0}в десятичной системе счисления", result.Normalize());
         }
         /// <summary>
         /// Поиск и преобразование аргумента в число
@@ -58,16 +64,6 @@ namespace Numbers
             BigInteger bigInt = new BigInteger();
             BigInteger.TryParse(args,out bigInt);
             return bigInt;
-        }
-        /// <summary>
-        /// Финальный этап работы с 10сс
-        /// </summary>
-        /// <param name="x">Первоначальное большое число</param>
-        public static void WorkWirh10(BigInteger x)
-        {
-            string result = Translate.Russian(x).Normalize();
-            Console.WriteLine("Длинна введенной строки = {0}", x.ToString().Length);
-            Console.WriteLine("{0}в десятичной системе счисления", result.Normalize());
         }
     }
 }

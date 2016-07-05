@@ -25,15 +25,15 @@ namespace Numbers
             string res = "";
             string num = x.ToString();
             int digit = 0;
-            while(num.Length>3)
+            while (num.Length > 3)
             {
-            int LastThree = Convert.ToInt32(num.Substring(num.Length-3));
-            res = String.Format("{0} {1}", Ending(LastThree, digit, nums5[digit++]), res);
-            num = num.Remove(num.Length - 3);                
-            }                       
+                int LastThree = Convert.ToInt32(num.Substring(num.Length - 3));
+                res = String.Format("{0} {1}", Ending(LastThree, digit, nums5[digit++]), res);
+                num = num.Remove(num.Length - 3);
+            }
             res = String.Format("{0} {1}", Ending(Convert.ToInt32(num), digit, nums5[digit++]), res);
-            if(res[0]==' ')
-                res.Remove(0,1);
+            if (res[0] == ' ')
+                res.Remove(0, 1);
             return res;
         }
         /// <summary>
@@ -57,12 +57,23 @@ namespace Numbers
         /// <returns></returns>
         public static string Ending(int LastThree, int digit,string word)
         {
-            string res = String.Empty;
-            int LastNum = LastThree % 10;
-            if (digit == 1) res = (LastNum > 1 || LastNum == 0) ? (LastNum < 5) ? String.Format("и") : String.Empty : String.Format("а");
-            else if (digit != 0) res = (LastNum > 1 || LastNum == 0) ? (LastNum < 5) ? String.Format("а") : String.Format("ов") : String.Empty;
-            if (LastThree != 0) return String.Format("{0} {1}{2}", ThirdDigit(LastThree, digit), word, res);
-            else return res;
+            if (LastThree == 0) return "";
+            else if (digit == 0 && LastThree == 0) return "ноль";
+            else
+            {
+                string res = String.Empty;
+                int LastNum = LastThree % 10;
+                if (digit == 1)
+                    res = (LastNum > 1 || LastNum == 0) ? (LastNum < 5) ? String.Format("и") : String.Empty : String.Format("а");
+                else if 
+                    (digit != 0) res = (LastNum > 1 || LastNum == 0) ? (LastNum < 5) ? String.Format("а") : String.Format("ов") : String.Empty;
+                string ThirdDigit = "";
+                if (LastThree < 3 && digit == 1) ThirdDigit = (LastThree == 1) ? "одна" : "две";
+                else ThirdDigit = (LastThree % 100 > 9 && LastThree % 100 < 20) ? ThirdDigit + nums2[LastThree % 10] : String.Format("{0}{1} {2}", ThirdDigit, nums3[(LastThree / 10) % 10], nums1[LastThree % 10]);
+                ThirdDigit = String.Format("{0} {1}", nums4[LastThree / 100], ThirdDigit);
+                if (LastThree != 0) return String.Format("{0} {1}{2}", ThirdDigit, word, res);
+                else return res;
+            }
         }
     }
 }

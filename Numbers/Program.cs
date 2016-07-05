@@ -15,8 +15,7 @@ namespace Numbers
             {
                 BigInteger x = new BigInteger();
                 CommandLine.Check(args, ref x);
-                foreach (string a in args)
-                    if (a == CommandLine.eight) CommandLine.Eight(x);
+                CommandLine.Eight(x, args);
             }
             catch(Exception ex)
             {
