@@ -10,25 +10,26 @@ namespace Numbers
     class Program
     {
         static void Main(string[] args)
-        {
-            Console.WriteLine("Введите число:");
-            string num = Console.ReadLine();
-            Console.WriteLine("Длинна введенной строки = {0}" , num.Length);
-            BigInteger x = BigInteger.Parse(num);            
+        {            
             try
             {
+                Console.WriteLine("Введите число:");
+                string num = Console.ReadLine();
+                Console.WriteLine("Длинна введенной строки = {0}", num.Length);
+                BigInteger x = BigInteger.Parse(num);
                 Nums n = new Nums(x);
-                Translate t = new Translate(x);
-                string result = t.Russian().Normalize();
-                Console.WriteLine("{0}в десятичной системе счисления", Clean.Cleaninig(Clean.Cleen(result)));
-                Console.WriteLine(" ");
-                t.x = BigInteger.Parse(n.ToEight(8));
-                string Eight = t.Russian().Normalize();
-                Console.WriteLine("{0}в восьмиричной системе счисления", Clean.Cleaninig(Clean.Cleen(Eight.Normalize())));
+                string result = Translate.Russian(x).Normalize();
+                Console.WriteLine("{0}в десятичной системе счисления", result.Normalize());
+                if (args[0].Contains("-eight"))
+                {
+                    Console.WriteLine(" ");
+                    string Eight = Translate.Russian(BigInteger.Parse(n.ToEight(8))).Normalize();
+                    Console.WriteLine("{0}в восьмиричной системе счисления", Eight.Normalize());
+                }                                
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                //Console.WriteLine(ex.Message);
             }
             Console.ReadKey();
         }
