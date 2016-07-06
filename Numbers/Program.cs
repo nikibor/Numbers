@@ -13,9 +13,11 @@ namespace Numbers
         {
             try
             {
+                
                 BigInteger x = new BigInteger();
-                CommandLine.Check(args, ref x);
-                CommandLine.Eight(x, args);
+                CommandLine cmd = new CommandLine(x, args);
+                cmd.Check();
+                cmd.Eight();
             }
             catch(Exception ex)
             {

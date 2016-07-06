@@ -13,32 +13,35 @@ namespace Numbers
         public static string eight = "-eight";
         public static string eng = "-eng";
         public static string num = "-num";
-        /// <summary>
-        /// Работа с переводом в 8сс
-        /// </summary>
-        /// <param name="n">Первоначальное число</param>
-        public static void Eight(BigInteger n, string[] args)
+        English Eng = new English();
+        Russian Rus = new Russian();
+        BigInteger bigInt { set; get; }
+        string[] args;
+
+        public CommandLine(BigInteger bigInt, string[] args)
+        {
+            this.bigInt = bigInt;
+            this.args = args;
+        }
+
+        public void Eight()
         {
             foreach (string a in args)
-                if (a == CommandLine.eight)
+                if (a == eight)
                 {
                     Console.WriteLine(" ");
-                    string Eight = Translate.Russian(BigInteger.Parse(Nums.ToEight(n))).Normalize();
-                    Console.WriteLine("{0}в восьмиричной системе счисления", Eight.Normalize());
+                    string Eight = (args.Contains(eng)) ? Eng.Translate(Nums.ToEight(bigInt)).Normalize() : Rus.Translate(Nums.ToEight(bigInt)).Normalize();
+                    Console.WriteLine("{0}в восьмиричной системе счисления", Eight.Remove(Eight.Length - 1, 1));
                 }
         }
-        /// <summary>
-        /// Проверка параметров и выдача результата
-        /// </summary>
-        /// <param name="args">параметры</param>
-        /// <param name="x"></param>
-        public static void Check(string[] args, ref BigInteger bigInt)
+        
+        public void Check()
         {
-            if(args.Length!=0)
+            if (args.Length != 0)
             {
-                for(int i=0;i<args.Length-1;i++)
+                for (int i = 0; i < args.Length - 1; i++)
                 {
-                    if(args[i]==num)
+                    if (args[i] == num)
                     {
                         bigInt = Num(args[i + 1]);
                         break;
@@ -49,20 +52,18 @@ namespace Numbers
             {
                 Console.WriteLine("Введите число:");
                 bigInt = BigInteger.Parse(Console.ReadLine());
+                if (bigInt < 0) Console.WriteLine("Число отрицательное");
             }
-            string result = Translate.Russian(bigInt).Normalize();
+            string result = (args.Contains(eng)) ? Eng.Translate(bigInt.ToString()).Normalize() : Rus.Translate(bigInt.ToString()).Normalize();
             Console.WriteLine("Длинна введенной строки = {0}", bigInt.ToString().Length);
-            Console.WriteLine("{0}в десятичной системе счисления", result.Normalize());
+            if (bigInt < 0) Console.WriteLine("Число отрицательное");
+            else Console.WriteLine("{0}в десятичной системе счисления", result.Remove(result.Length - 1, 1));
         }
-        /// <summary>
-        /// Поиск и преобразование аргумента в число
-        /// </summary>
-        /// <param name="args">параметр</param>
-        /// <returns>Начальное число для дальнейшей работы</returns>
-        public static BigInteger Num(string args)
+        
+        public BigInteger Num(string args)
         {
             BigInteger bigInt = new BigInteger();
-            BigInteger.TryParse(args,out bigInt);
+            BigInteger.TryParse(args, out bigInt);
             return bigInt;
         }
     }

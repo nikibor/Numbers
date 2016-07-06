@@ -45,10 +45,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommandLine.cs" />
+    <Compile Include="English.cs" />
     <Compile Include="Nums.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Translate.cs" />
+    <Compile Include="Russian.cs" />
+    <Compile Include="Language.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
