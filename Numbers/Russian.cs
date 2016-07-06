@@ -11,8 +11,7 @@ namespace Numbers
     {
         public Russian()
         {
-            this.Units = new List<string> { String.Empty, "один", "два", "три", "четыре", "пять", "шесть", "семь", "восемь", "девять" };
-            this.Tens = new List<string> { "десять", "одиннадцать", "двенадцать", "тренадцать", "четырнадцать", "пятнадцать", "шестнадцать", "семнадцать", "восемнадцать", "девятнадцать" };
+            this.Units = new List<string> { String.Empty, "один", "два", "три", "четыре", "пять", "шесть", "семь", "восемь", "девять", "десять", "одиннадцать", "двенадцать", "тренадцать", "четырнадцать", "пятнадцать", "шестнадцать", "семнадцать", "восемнадцать", "девятнадцать" };
             this.Decade = new List<string> { String.Empty, String.Empty, "двадцать", "тридцать", "сорок", "пятьдесят", "шестьдесят", "семьдесят", "восемдесят", "девяносто" };
             this.Hundreads = new List<string> { String.Empty, "сто", "двести", "триста", "четыреста", "пятьсот", "шестьсот", "семьсот", "восемьсот", "девятьсот" };
             this.Big = new List<string> { String.Empty, "тысяч", "миллион", "миллиард", "триллион", "квадрилион", "квантиллион", "секстиллион",
@@ -21,39 +20,45 @@ namespace Numbers
             "дуовигинтиллион", "тревигинтиллион", "кватторвигинтиллион", "квинвгинтиллион", "сексвигинтиллион", "септимвигинтиллион",
             "октовигинтиллион", "новемвигинтиллион", "тригинтиллион", "антригинтиллион", "гугол" };
         }
+        /// <summary>
+        /// Функция преписывающая окончания к названию класса числа
+        /// </summary>
+        /// <param name="LastThree">Последние 3 числа</param>
+        /// <param name="digit">Номер разряда</param>
+        /// <param name="word">Название разряда</param>
+        /// <returns></returns>
         public override string Ending(int LastThree, int digit, string word)
         {
-            if (digit == 0 && LastThree == 0) return "ноль";
-            else if (LastThree == 0) return "";
-            else
+            string res = String.Empty;
+            switch (digit)
             {
-                string res = String.Empty;
-                int LastNum = LastThree % 10;
-                if (digit == 1)
-                {
-                    if (LastNum == 1 && LastThree % 100 != 11) res = "а";
-                    else if ((LastNum > 2 && LastNum < 5) && LastThree % 100 > 15)
-                        res = "и";
-                    else res = String.Empty;
-                }
-                else if (digit != 0 && LastThree > 0)
-                {
-                    if (LastNum == 1 && LastThree % 100 != 11) res = String.Empty;
-                    else if ((LastNum > 2 && LastNum < 5) && LastThree % 100 > 15)
+                case (0):
+                    res = (LastThree == 0) ? "ноль" : "";
+                    break;
+                case (1):
+                    if (LastThree % 10 == 1 && (LastThree % 100) / 10 != 1)
                         res = "а";
-                    else res = "ов";
-                }
-                string ThirdDigit = "";
-                if (LastThree < 3 && digit == 1)
-                    ThirdDigit = (LastThree == 1) ? "одна" : "две";
-                else
-                    ThirdDigit = (LastThree % 100 > 9 && LastThree % 100 < 20) ? ThirdDigit + Tens[LastThree % 10] : String.Format("{0}{1} {2}", ThirdDigit, Decade[(LastThree / 10) % 10], Units[LastThree % 10]);
-                ThirdDigit = String.Format("{0} {1}", Hundreads[LastThree / 100], ThirdDigit);
-                if (LastThree != 0)
-                    return String.Format("{0} {1}{2}", ThirdDigit, word, res);
-                else
-                    return res;
+                    else if (LastThree % 10 > 1 && LastThree % 10 < 5 && (LastThree % 100) / 10 > 1 && (LastThree % 100) / 10 < 5)
+                        res = "и";
+                    else
+                        res = "";
+                    break;
+                default:
+                    if (LastThree % 10 == 1 && (LastThree % 100) / 10 != 1)
+                        res = "";
+                    else if (LastThree % 10 > 1 && LastThree % 10 < 5 && (LastThree % 100) / 10 > 1 && (LastThree % 100) / 10 < 5)
+                        res = "а";
+                    else
+                        res = "ов";
+                    break;
             }
+            string thirdDigit = "";
+            thirdDigit = (LastThree % 100 > 9 && LastThree % 100 < 20) ? thirdDigit + Units[(LastThree % 10) + 10] : String.Format("{0}{1} {2}", thirdDigit, Decade[(LastThree / 10) % 10], Units[LastThree % 10]);
+            thirdDigit = String.Format("{0} {1}", Hundreads[LastThree / 100], thirdDigit);
+            if (LastThree != 0)
+                return String.Format("{0} {1}{2}", thirdDigit, word, res);
+            else
+                return res;
         }
     }
 }

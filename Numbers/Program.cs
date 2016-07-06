@@ -13,13 +13,12 @@ namespace Numbers
         {
             try
             {
-                
                 BigInteger x = new BigInteger();
                 CommandLine cmd = new CommandLine(x, args);
                 cmd.Check();
                 cmd.Eight();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }

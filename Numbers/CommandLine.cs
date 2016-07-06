@@ -17,24 +17,32 @@ namespace Numbers
         Russian Rus = new Russian();
         BigInteger bigInt { set; get; }
         string[] args;
-
+        /// <summary>
+        /// Конструктор класса для описания поведения программы
+        /// </summary>
+        /// <param name="bigInt">Начальное число</param>
+        /// <param name="args">Параметры командной строки</param>
         public CommandLine(BigInteger bigInt, string[] args)
         {
-            this.bigInt = bigInt;
+            //this.bigInt = bigInt;
             this.args = args;
         }
-
+        /// <summary>
+        /// Функция преобразующая в 8сс
+        /// </summary>
         public void Eight()
         {
             foreach (string a in args)
                 if (a == eight)
                 {
-                    Console.WriteLine(" ");
+                    Console.WriteLine();
                     string Eight = (args.Contains(eng)) ? Eng.Translate(Nums.ToEight(bigInt)).Normalize() : Rus.Translate(Nums.ToEight(bigInt)).Normalize();
                     Console.WriteLine("{0}в восьмиричной системе счисления", Eight.Remove(Eight.Length - 1, 1));
                 }
         }
-        
+        /// <summary>
+        /// Проверка всех аргументов, выбор языка, написание основного числа
+        /// </summary>
         public void Check()
         {
             if (args.Length != 0)
@@ -59,7 +67,11 @@ namespace Numbers
             if (bigInt < 0) Console.WriteLine("Число отрицательное");
             else Console.WriteLine("{0}в десятичной системе счисления", result.Remove(result.Length - 1, 1));
         }
-        
+        /// <summary>
+        /// Преобразование аргумента числа
+        /// </summary>
+        /// <param name="args"></param>
+        /// <returns></returns>
         public BigInteger Num(string args)
         {
             BigInteger bigInt = new BigInteger();
