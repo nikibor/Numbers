@@ -13,10 +13,9 @@ namespace Numbers
         {
             try
             {
-                BigInteger x = new BigInteger();
-                CommandLine cmd = new CommandLine(x, args);
-                cmd.Check();
-                cmd.Eight();
+                CommandLine cmd = new CommandLine(args);
+                //cmd.Decimal();
+                cmd.AnotherSystemsOfCounting();
             }
             catch (Exception ex)
             {

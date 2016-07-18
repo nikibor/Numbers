@@ -2,25 +2,26 @@
 
 namespace Numbers
 {
+    /// <summary>
+    /// Класс для работы с числами
+    /// </summary>
     class Nums
     {
-        public BigInteger x { set; get; }        
+        public BigInteger bigInt { set; get; }
         /// <summary>
-        /// Перевод в 8сс
+        /// Функция по переводу числа в 8сс
         /// </summary>
-        /// <returns>Строка с переведенным числом</returns>
-        public static string ToEight(BigInteger x)
+        public static string ToEight(string bigInt, int parametr)
         {
-            string res = "";
-            BigInteger ost = new BigInteger();
-            while(x>8)
+            string result = "";
+            BigInteger ostAfterDivide = BigInteger.Parse(bigInt);
+            while (ostAfterDivide > parametr)
             {
-                ost = x % 8;
-                x = x / 8;
-                res = ost.ToString() + res;
+                result = (ostAfterDivide % parametr).ToString() + result;
+                ostAfterDivide = ostAfterDivide / parametr;
             }
-            res = x.ToString() + res;
-            return res;
+            result = ostAfterDivide.ToString() + result;
+            return result;
         }
     }
 }

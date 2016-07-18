@@ -7,40 +7,55 @@ using System.Numerics;
 
 namespace Numbers
 {
+    /// <summary>
+    /// Класс обеспечивающий преобразование числа в слова
+    /// </summary>
     abstract class Language
     {
-        public List<string> Units { set; get; }
-        public List<string> Decade { set; get; }
-        public List<string> Hundreads { set; get; }
-        public List<string> Big { set; get; }
-        public List<string> Exceptions { set; get; }
+        protected List<string> Units { set; get; }
+        protected List<string> Decade { get; set; }
+        protected List<string> Hundreads { get; set; }
+        protected List<string> Big { get; set; }
 
+        /// <summary>
+        /// Перевод численного впредставления в словестный
+        /// </summary>
         public string Translate(string bigInt)
         {
-            string res = "";
+            string ending = "";
             int digit = 0;
+            if (bigInt == "0")
+                return "ноль";
+
             while (bigInt.Length > 3)
             {
                 int LastThree = Convert.ToInt32(bigInt.Substring(bigInt.Length - 3));
-                res = String.Format("{0} {1}", Ending(LastThree, digit, Big[digit++]), res);
+                if (LastThree != 0)
+                    ending = String.Join("", CombineWord(LastThree, Ending(LastThree, digit), digit), ending);
                 bigInt = bigInt.Remove(bigInt.Length - 3);
+                digit++;
             }
-            res = String.Format("{0} {1}", Ending(Convert.ToInt32(bigInt), digit, Big[digit++]), res);
-            return res;
-        }
-        public string ThirdDigit(int y, int digit)
-        {
-            string res = "";
-            if (y < 3 && digit == 1)
-                res = (y == 1) ? Exceptions[0] : Exceptions[1];
-            else
-                if (y % 100 > 9 && y % 100 < 20)
-                res += Units[(y % 10) + 10];
-            else
-                res = (digit == 0 && y == 0) ? Exceptions[2] : String.Format("{0}{1} {2}", res, Decade[(y / 10) % 10], Units[y % 10]);
-            return res = String.Format("{0} {1}", Hundreads[y / 100], res);
+            ending = String.Join("", CombineWord(Convert.ToInt32(bigInt), Ending(Convert.ToInt32(bigInt), digit), digit), ending);
+            return ending;
         }
 
-        abstract public string Ending(int LastThree, int digit, string word);    
+        public abstract string ThirdDigit(int number, int digit);
+        
+        public abstract string Ending(int LastThree, int digit);
+
+        private string CombineWord(int LastThree, string endingOfWord, int digit)
+        {
+            string result = "";
+            string LastNumsTranslated = ThirdDigit(LastThree, digit);
+            try
+            {
+                result = String.Join("", Big[digit], endingOfWord);
+            }
+            catch (Exception)
+            {
+                throw new Exception("Введенное число слишком большое");
+            }
+            return String.Format("{0}{1}", LastNumsTranslated, result);
+        }
     }
 }
